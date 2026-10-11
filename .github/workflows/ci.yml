@@ -1,0 +1,28 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "*" ]
+  workflow_dispatch: 
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest 
+
+    steps:
+      - name: Clone the project
+        uses: actions/checkout@v4 
+
+      - name: Install the software (Node.js)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' 
+
+      - name: Download dependencies
+        run: npm install
+
+      - name: Create a project build
+        run: npm run build --if-present
+
+      - name: Run unit tests
+        run: npm test
